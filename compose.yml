@@ -20,7 +20,3 @@ services:
     ports:
       - "3306:3306"
     env_file: ./.db_env
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: root
-    #   MYSQL_DATABASE: todo
-    #   TZ: "Asia/Tokyo"
