@@ -20,3 +20,6 @@ services:
     ports:
       - "3306:3306"
     env_file: ./.db_env
+    volumes:
+      - ./src/infrastructure/sql/data:/var/lib/mysql
+      - ./src/infrastructure/sql/myconf/my.cnf:/etc/mysql/conf.d/my.cnf

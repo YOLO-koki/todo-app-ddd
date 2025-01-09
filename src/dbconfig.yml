@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:root@tcp(todo-mysql-db:3306)/todo?parseTime=true
+  dir: ./infrastructure/sql/migrations
+  table: migrations
