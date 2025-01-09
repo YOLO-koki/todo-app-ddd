@@ -12,6 +12,8 @@ services:
       - ./.go_env
     environment:
       - TZ=Asia/Tokyo
+    ports:
+      - "8000:8080"
   db:
     image: mysql:8.0.28
     platform: linux/amd64
