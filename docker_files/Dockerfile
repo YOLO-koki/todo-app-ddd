@@ -4,6 +4,8 @@ RUN apk update && apk add git
 
 # sql-migrateをインストール
 RUN go install github.com/rubenv/sql-migrate/...@latest
+# sqlboilerをインストール
+RUN go install github.com/volatiletech/sqlboiler/v4@latest github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest
 
 RUN mkdir -p /go/src
 WORKDIR /go/src
