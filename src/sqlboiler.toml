@@ -1,0 +1,10 @@
+output = "infrastructure/models"
+
+[mysql]
+dbname = "todo"
+host = "todo-mysql-db"
+port = 3306
+user = "root"
+pass = "root"
+sslmode = "false"
+blacklist = ["migrations"]
