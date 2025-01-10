@@ -1,12 +1,15 @@
 package usecase
 
 import (
+	"todo-app/infrastructure/repository"
+
 	"github.com/gin-gonic/gin"
 )
 
 func GetTodo(c *gin.Context) {
-	todo := "todo"
+	todo := repository.GetById(1)
+
 	c.JSON(200, gin.H{
-		"title": todo,
+		"todo": todo,
 	})
 }
