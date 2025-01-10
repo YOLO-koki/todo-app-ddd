@@ -11,7 +11,6 @@ func Router() *gin.Engine {
 
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/hello", handler.Hello)
 		v1.GET("/todo", handler.GetTitle)
 	}
 
