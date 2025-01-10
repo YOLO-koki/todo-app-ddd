@@ -1,13 +1,8 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import "todo-app/presentation"
 
 func main() {
-	r := gin.Default()
-	r.GET("/hello", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "hello",
-		})
-	})
+	r := presentation.Router()
 	r.Run()
 }
