@@ -1,13 +1,15 @@
 package usecase
 
 import (
+	"todo-app/domain/task"
 	"todo-app/infrastructure/repository"
-
-	"github.com/gin-gonic/gin"
 )
 
-func GetTask(c *gin.Context) {
-	task := repository.GetById(1)
+type GetTasKUsecase struct {
+	taskRepository repository.TaskRepository
+}
 
-	c.JSON(200, task)
+func (u *GetTasKUsecase) GetTask(id int) *task.Task {
+	task := u.taskRepository.FindById(id)
+	return task
 }
