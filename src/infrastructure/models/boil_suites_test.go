@@ -12,70 +12,76 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
-	t.Run("Todos", testTodos)
+	t.Run("Tasks", testTasks)
 }
 
+func TestSoftDelete(t *testing.T) {}
+
+func TestQuerySoftDeleteAll(t *testing.T) {}
+
+func TestSliceSoftDeleteAll(t *testing.T) {}
+
 func TestDelete(t *testing.T) {
-	t.Run("Todos", testTodosDelete)
+	t.Run("Tasks", testTasksDelete)
 }
 
 func TestQueryDeleteAll(t *testing.T) {
-	t.Run("Todos", testTodosQueryDeleteAll)
+	t.Run("Tasks", testTasksQueryDeleteAll)
 }
 
 func TestSliceDeleteAll(t *testing.T) {
-	t.Run("Todos", testTodosSliceDeleteAll)
+	t.Run("Tasks", testTasksSliceDeleteAll)
 }
 
 func TestExists(t *testing.T) {
-	t.Run("Todos", testTodosExists)
+	t.Run("Tasks", testTasksExists)
 }
 
 func TestFind(t *testing.T) {
-	t.Run("Todos", testTodosFind)
+	t.Run("Tasks", testTasksFind)
 }
 
 func TestBind(t *testing.T) {
-	t.Run("Todos", testTodosBind)
+	t.Run("Tasks", testTasksBind)
 }
 
 func TestOne(t *testing.T) {
-	t.Run("Todos", testTodosOne)
+	t.Run("Tasks", testTasksOne)
 }
 
 func TestAll(t *testing.T) {
-	t.Run("Todos", testTodosAll)
+	t.Run("Tasks", testTasksAll)
 }
 
 func TestCount(t *testing.T) {
-	t.Run("Todos", testTodosCount)
+	t.Run("Tasks", testTasksCount)
 }
 
 func TestHooks(t *testing.T) {
-	t.Run("Todos", testTodosHooks)
+	t.Run("Tasks", testTasksHooks)
 }
 
 func TestInsert(t *testing.T) {
-	t.Run("Todos", testTodosInsert)
-	t.Run("Todos", testTodosInsertWhitelist)
+	t.Run("Tasks", testTasksInsert)
+	t.Run("Tasks", testTasksInsertWhitelist)
 }
 
 func TestReload(t *testing.T) {
-	t.Run("Todos", testTodosReload)
+	t.Run("Tasks", testTasksReload)
 }
 
 func TestReloadAll(t *testing.T) {
-	t.Run("Todos", testTodosReloadAll)
+	t.Run("Tasks", testTasksReloadAll)
 }
 
 func TestSelect(t *testing.T) {
-	t.Run("Todos", testTodosSelect)
+	t.Run("Tasks", testTasksSelect)
 }
 
 func TestUpdate(t *testing.T) {
-	t.Run("Todos", testTodosUpdate)
+	t.Run("Tasks", testTasksUpdate)
 }
 
 func TestSliceUpdateAll(t *testing.T) {
-	t.Run("Todos", testTodosSliceUpdateAll)
+	t.Run("Tasks", testTasksSliceUpdateAll)
 }

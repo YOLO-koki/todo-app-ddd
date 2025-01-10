@@ -6,6 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetTitle(c *gin.Context) {
-	usecase.GetTodo(c)
+func GetTask(c *gin.Context) {
+	usecase.GetTask(c)
 }

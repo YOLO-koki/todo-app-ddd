@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetTodo(c *gin.Context) {
-	todo := repository.GetById(1)
+func GetTask(c *gin.Context) {
+	task := repository.GetById(1)
 
 	c.JSON(200, gin.H{
-		"todo": todo,
+		"task": task,
 	})
 }

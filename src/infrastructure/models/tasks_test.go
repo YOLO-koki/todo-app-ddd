@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testTodos(t *testing.T) {
+func testTasks(t *testing.T) {
 	t.Parallel()
 
-	query := Todos()
+	query := Tasks()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testTodosDelete(t *testing.T) {
+func testTasksDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testTodosDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testTodosDelete(t *testing.T) {
 	}
 }
 
-func testTodosQueryDeleteAll(t *testing.T) {
+func testTasksQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testTodosQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := Todos().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := Tasks().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testTodosQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testTodosSliceDeleteAll(t *testing.T) {
+func testTasksSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testTodosSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := TodoSlice{o}
+	slice := TaskSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testTodosSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testTodosSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testTodosExists(t *testing.T) {
+func testTasksExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testTodosExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := TodoExists(ctx, tx, o.ID)
+	e, err := TaskExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if Todo exists: %s", err)
+		t.Errorf("Unable to check if Task exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected TodoExists to return true, but got false.")
+		t.Errorf("Expected TaskExists to return true, but got false.")
 	}
 }
 
-func testTodosFind(t *testing.T) {
+func testTasksFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testTodosFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	todoFound, err := FindTodo(ctx, tx, o.ID)
+	taskFound, err := FindTask(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if todoFound == nil {
+	if taskFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testTodosBind(t *testing.T) {
+func testTasksBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testTodosBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = Todos().Bind(ctx, tx, o); err != nil {
+	if err = Tasks().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testTodosOne(t *testing.T) {
+func testTasksOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testTodosOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := Todos().One(ctx, tx); err != nil {
+	if x, err := Tasks().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testTodosAll(t *testing.T) {
+func testTasksAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	todoOne := &Todo{}
-	todoTwo := &Todo{}
-	if err = randomize.Struct(seed, todoOne, todoDBTypes, false, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	taskOne := &Task{}
+	taskTwo := &Task{}
+	if err = randomize.Struct(seed, taskOne, taskDBTypes, false, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
-	if err = randomize.Struct(seed, todoTwo, todoDBTypes, false, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	if err = randomize.Struct(seed, taskTwo, taskDBTypes, false, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = todoOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = taskOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = todoTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = taskTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := Todos().All(ctx, tx)
+	slice, err := Tasks().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testTodosAll(t *testing.T) {
 	}
 }
 
-func testTodosCount(t *testing.T) {
+func testTasksCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	todoOne := &Todo{}
-	todoTwo := &Todo{}
-	if err = randomize.Struct(seed, todoOne, todoDBTypes, false, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	taskOne := &Task{}
+	taskTwo := &Task{}
+	if err = randomize.Struct(seed, taskOne, taskDBTypes, false, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
-	if err = randomize.Struct(seed, todoTwo, todoDBTypes, false, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	if err = randomize.Struct(seed, taskTwo, taskDBTypes, false, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = todoOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = taskOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = todoTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = taskTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,155 +299,155 @@ func testTodosCount(t *testing.T) {
 	}
 }
 
-func todoBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func todoAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Todo) error {
-	*o = Todo{}
+func taskAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Task) error {
+	*o = Task{}
 	return nil
 }
 
-func testTodosHooks(t *testing.T) {
+func testTasksHooks(t *testing.T) {
 	t.Parallel()
 
 	var err error
 
 	ctx := context.Background()
-	empty := &Todo{}
-	o := &Todo{}
+	empty := &Task{}
+	o := &Task{}
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, o, todoDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Todo object: %s", err)
+	if err = randomize.Struct(seed, o, taskDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Task object: %s", err)
 	}
 
-	AddTodoHook(boil.BeforeInsertHook, todoBeforeInsertHook)
+	AddTaskHook(boil.BeforeInsertHook, taskBeforeInsertHook)
 	if err = o.doBeforeInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeInsertHook function to empty object, but got: %#v", o)
 	}
-	todoBeforeInsertHooks = []TodoHook{}
+	taskBeforeInsertHooks = []TaskHook{}
 
-	AddTodoHook(boil.AfterInsertHook, todoAfterInsertHook)
+	AddTaskHook(boil.AfterInsertHook, taskAfterInsertHook)
 	if err = o.doAfterInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterInsertHook function to empty object, but got: %#v", o)
 	}
-	todoAfterInsertHooks = []TodoHook{}
+	taskAfterInsertHooks = []TaskHook{}
 
-	AddTodoHook(boil.AfterSelectHook, todoAfterSelectHook)
+	AddTaskHook(boil.AfterSelectHook, taskAfterSelectHook)
 	if err = o.doAfterSelectHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterSelectHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterSelectHook function to empty object, but got: %#v", o)
 	}
-	todoAfterSelectHooks = []TodoHook{}
+	taskAfterSelectHooks = []TaskHook{}
 
-	AddTodoHook(boil.BeforeUpdateHook, todoBeforeUpdateHook)
+	AddTaskHook(boil.BeforeUpdateHook, taskBeforeUpdateHook)
 	if err = o.doBeforeUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpdateHook function to empty object, but got: %#v", o)
 	}
-	todoBeforeUpdateHooks = []TodoHook{}
+	taskBeforeUpdateHooks = []TaskHook{}
 
-	AddTodoHook(boil.AfterUpdateHook, todoAfterUpdateHook)
+	AddTaskHook(boil.AfterUpdateHook, taskAfterUpdateHook)
 	if err = o.doAfterUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpdateHook function to empty object, but got: %#v", o)
 	}
-	todoAfterUpdateHooks = []TodoHook{}
+	taskAfterUpdateHooks = []TaskHook{}
 
-	AddTodoHook(boil.BeforeDeleteHook, todoBeforeDeleteHook)
+	AddTaskHook(boil.BeforeDeleteHook, taskBeforeDeleteHook)
 	if err = o.doBeforeDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeDeleteHook function to empty object, but got: %#v", o)
 	}
-	todoBeforeDeleteHooks = []TodoHook{}
+	taskBeforeDeleteHooks = []TaskHook{}
 
-	AddTodoHook(boil.AfterDeleteHook, todoAfterDeleteHook)
+	AddTaskHook(boil.AfterDeleteHook, taskAfterDeleteHook)
 	if err = o.doAfterDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterDeleteHook function to empty object, but got: %#v", o)
 	}
-	todoAfterDeleteHooks = []TodoHook{}
+	taskAfterDeleteHooks = []TaskHook{}
 
-	AddTodoHook(boil.BeforeUpsertHook, todoBeforeUpsertHook)
+	AddTaskHook(boil.BeforeUpsertHook, taskBeforeUpsertHook)
 	if err = o.doBeforeUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpsertHook function to empty object, but got: %#v", o)
 	}
-	todoBeforeUpsertHooks = []TodoHook{}
+	taskBeforeUpsertHooks = []TaskHook{}
 
-	AddTodoHook(boil.AfterUpsertHook, todoAfterUpsertHook)
+	AddTaskHook(boil.AfterUpsertHook, taskAfterUpsertHook)
 	if err = o.doAfterUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpsertHook function to empty object, but got: %#v", o)
 	}
-	todoAfterUpsertHooks = []TodoHook{}
+	taskAfterUpsertHooks = []TaskHook{}
 }
 
-func testTodosInsert(t *testing.T) {
+func testTasksInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -457,7 +457,7 @@ func testTodosInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -467,24 +467,24 @@ func testTodosInsert(t *testing.T) {
 	}
 }
 
-func testTodosInsertWhitelist(t *testing.T) {
+func testTasksInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(todoColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(taskColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -494,14 +494,14 @@ func testTodosInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testTodosReload(t *testing.T) {
+func testTasksReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -516,14 +516,14 @@ func testTodosReload(t *testing.T) {
 	}
 }
 
-func testTodosReloadAll(t *testing.T) {
+func testTasksReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -533,21 +533,21 @@ func testTodosReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := TodoSlice{o}
+	slice := TaskSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testTodosSelect(t *testing.T) {
+func testTasksSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -557,7 +557,7 @@ func testTodosSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := Todos().All(ctx, tx)
+	slice, err := Tasks().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -568,25 +568,25 @@ func testTodosSelect(t *testing.T) {
 }
 
 var (
-	todoDBTypes = map[string]string{`ID`: `int`, `Title`: `varchar`, `Description`: `text`, `Status`: `enum('pending','in_progress','completed')`, `CreatedAt`: `timestamp`, `UpdatedAt`: `timestamp`}
+	taskDBTypes = map[string]string{`ID`: `int`, `Title`: `varchar`, `Description`: `text`, `Status`: `enum('pending','in_progress','completed')`, `CreatedAt`: `timestamp`, `UpdatedAt`: `timestamp`}
 	_           = bytes.MinRead
 )
 
-func testTodosUpdate(t *testing.T) {
+func testTasksUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(todoPrimaryKeyColumns) {
+	if 0 == len(taskPrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(todoAllColumns) == len(todoPrimaryKeyColumns) {
+	if len(taskAllColumns) == len(taskPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -596,7 +596,7 @@ func testTodosUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -605,8 +605,8 @@ func testTodosUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -616,18 +616,18 @@ func testTodosUpdate(t *testing.T) {
 	}
 }
 
-func testTodosSliceUpdateAll(t *testing.T) {
+func testTasksSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(todoAllColumns) == len(todoPrimaryKeyColumns) {
+	if len(taskAllColumns) == len(taskPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Todo{}
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := &Task{}
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -637,7 +637,7 @@ func testTodosSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -646,18 +646,18 @@ func testTodosSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, todoDBTypes, true, todoPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	if err = randomize.Struct(seed, o, taskDBTypes, true, taskPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(todoAllColumns, todoPrimaryKeyColumns) {
-		fields = todoAllColumns
+	if strmangle.StringSliceMatch(taskAllColumns, taskPrimaryKeyColumns) {
+		fields = taskAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			todoAllColumns,
-			todoPrimaryKeyColumns,
+			taskAllColumns,
+			taskPrimaryKeyColumns,
 		)
 	}
 
@@ -675,7 +675,7 @@ func testTodosSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := TodoSlice{o}
+	slice := TaskSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -683,32 +683,32 @@ func testTodosSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testTodosUpsert(t *testing.T) {
+func testTasksUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(todoAllColumns) == len(todoPrimaryKeyColumns) {
+	if len(taskAllColumns) == len(taskPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
-	if len(mySQLTodoUniqueColumns) == 0 {
+	if len(mySQLTaskUniqueColumns) == 0 {
 		t.Skip("Skipping table with no unique columns to conflict on")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := Todo{}
-	if err = randomize.Struct(seed, &o, todoDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	o := Task{}
+	if err = randomize.Struct(seed, &o, taskDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Todo: %s", err)
+		t.Errorf("Unable to upsert Task: %s", err)
 	}
 
-	count, err := Todos().Count(ctx, tx)
+	count, err := Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -717,15 +717,15 @@ func testTodosUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, todoDBTypes, false, todoPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Todo struct: %s", err)
+	if err = randomize.Struct(seed, &o, taskDBTypes, false, taskPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Task struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Todo: %s", err)
+		t.Errorf("Unable to upsert Task: %s", err)
 	}
 
-	count, err = Todos().Count(ctx, tx)
+	count, err = Tasks().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
