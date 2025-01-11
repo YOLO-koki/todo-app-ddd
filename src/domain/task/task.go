@@ -1,5 +1,7 @@
 package task
 
+import "log"
+
 type status string
 
 const (
@@ -24,5 +26,8 @@ func ReNew(id int, title string, description string, status status) *Task {
 }
 
 func ReNewStatus(s string) status {
+	if s != string(pending) && s != string(inProgress) && s != string(completed) {
+		log.Fatal("status is must be pending or in_progress or completed.")
+	}
 	return status(s)
 }
