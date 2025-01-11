@@ -12,7 +12,8 @@ type GetTasksUsecase struct {
 }
 
 func (u *GetTasksUsecase) GetTasks(c *gin.Context) []*task.Task {
-	tasks := u.taskRepository.FindAll()
+	t := repository.NewTaskRepository()
+	tasks := t.FindAll()
 
 	return tasks
 }

@@ -9,7 +9,7 @@ import (
 
 type TaskHandler struct {
 	getTasksUsecase usecase.GetTasksUsecase
-	getTaskUsecase  usecase.GetTasKUsecase
+	getTaskUsecase  usecase.GetTaskUsecase
 }
 
 func (h *TaskHandler) GetTasks(c *gin.Context) {

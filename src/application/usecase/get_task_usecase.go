@@ -5,11 +5,12 @@ import (
 	"todo-app/infrastructure/repository"
 )
 
-type GetTasKUsecase struct {
-	taskRepository repository.TaskRepository
+type GetTaskUsecase struct {
+	taskrepository repository.TaskRepository
 }
 
-func (u *GetTasKUsecase) GetTask(id int) *task.Task {
-	task := u.taskRepository.FindById(id)
+func (u *GetTaskUsecase) GetTask(id int) *task.Task {
+	t := repository.NewTaskRepository()
+	task := t.FindById(id)
 	return task
 }
